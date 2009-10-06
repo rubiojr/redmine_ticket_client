@@ -12,5 +12,10 @@ http://github.com/thoughtbot/hoptoad_notifier
 INSTALLATION
 ------------
 
-CONFIGURATION
+Install the rubygem from http://gemcutter.org
+
+EXAMPLES
 -------------
+see examples/ dir
+
+
