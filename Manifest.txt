@@ -1,0 +1,7 @@
+.autotest
+History.txt
+Manifest.txt
+README.txt
+Rakefile
+examples/post_ticket.rb
+lib/redmine-ticket/client.rb
