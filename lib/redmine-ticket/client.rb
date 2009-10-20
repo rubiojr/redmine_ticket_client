@@ -4,7 +4,7 @@ require 'rubygems'
 
 module RedmineTicketClient
 
-  VERSION = '0.1'
+  VERSION = '0.1.1'
 
   class << self
     attr_accessor :host, :port, :secure, :params, :http_open_timeout, :http_read_timeout,
@@ -94,9 +94,10 @@ module RedmineTicketClient
        
       case response
       when Net::HTTPSuccess then
-        puts "Redmine Success: #{response.class}"
+        return response.body
       else
         $stderr.puts "Redmine Failure: #{response.class}\n#{response.body if response.respond_to? :body}"
+        return response.class
       end
     end
     
