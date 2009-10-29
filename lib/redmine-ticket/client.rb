@@ -6,7 +6,7 @@ require 'pp'
 
 module RedmineTicketClient
 
-  VERSION = '0.2.1'
+  VERSION = '0.2.2'
 
   class << self
     attr_accessor :host, :port, :secure, :params, :http_open_timeout, :http_read_timeout,
