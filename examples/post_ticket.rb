@@ -5,7 +5,7 @@ params = {
                   # the name of your Tracker of choice in Redmine
                   :tracker => 'Bug',
                   # the key you generated before in Redmine
-                  :api_key => 'API_KEY_HERE', 
+                  :api_key => 'API KEY', 
                   # the name of a ticket category (optional.)
                   :category => 'Development', 
 
@@ -15,16 +15,20 @@ params = {
                   # the default priority (use a number, not a name. optional.)
                   #:priority => 5,
 
-                  :subject => 'malabaristic',
-                  :description => 'description text'
+                  :subject => "Test RTS #{rand * 100}",
+                  :description => 'description text',
+                  :custom_fields => {
+                    :field1 => 'bar',
+                    :field2 => 'foo'
+                  }
 
                  }.to_yaml
 
 RedmineTicketClient.configure do |config|
     config.params = params
-    config.host = '127.0.0.1'                            # the hostname your Redmine runs at
-    config.port = 3000                                           # the port your Redmine runs at
-    config.secure = false                                           # sends data to your server via SSL (optional.)
+    config.host = 'redmine.local' 
+    config.port = 80                 
+    config.secure = false                
   end
 
 RedmineTicketClient.post_ticket
