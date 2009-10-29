@@ -1,10 +1,12 @@
 require 'net/http'
 require 'net/https'
 require 'rubygems'
+require 'rest_client'
+require 'pp'
 
 module RedmineTicketClient
 
-  VERSION = '0.1.1'
+  VERSION = '0.2.1'
 
   class << self
     attr_accessor :host, :port, :secure, :params, :http_open_timeout, :http_read_timeout,
@@ -52,9 +54,26 @@ module RedmineTicketClient
         :environment   => ENV.to_hash
       }
     end
+
+    def default_request_params
+      {}.merge RedmineTicketClient.params
+    end
     
     def post_ticket
       Sender.new.post_to_redmine( default_ticket_options )
+    end
+
+    def issue_status
+      RestClient.post("#{protocol}://#{host}:#{port}/ticket_server/issue_status", :api_key => default_request_params[:api_key], :issue_id => default_request_params[:issue_id])
+    end
+    def issues
+      RestClient.post("#{protocol}://#{host}:#{port}/ticket_server/issues", :api_key => default_request_params[:api_key], :issue_id => default_request_params[:issue_id])
+    end
+    def projects 
+      RestClient.post("#{protocol}://#{host}:#{port}/ticket_server/projects", :api_key => default_request_params[:api_key], :issue_id => default_request_params[:issue_id])
+    end
+    def journals 
+      RestClient.post("#{protocol}://#{host}:#{port}/ticket_server/journals", :api_key => default_request_params[:api_key], :issue_id => default_request_params[:issue_id])
     end
   end
 
