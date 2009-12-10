@@ -6,7 +6,7 @@ require 'pp'
 
 module RedmineTicketClient
 
-  VERSION = '0.2.2'
+  VERSION = '0.2.3'
 
   class << self
     attr_accessor :host, :port, :secure, :params, :http_open_timeout, :http_read_timeout,
@@ -47,8 +47,6 @@ module RedmineTicketClient
     
     def default_ticket_options #:nodoc:
       {
-        :params       => RedmineTicketClient.params,
-        :error_message => 'Notification',
         :request       => {},
         :session       => {},
         :environment   => ENV.to_hash
@@ -59,8 +57,12 @@ module RedmineTicketClient
       {}.merge RedmineTicketClient.params
     end
     
+    def new_issue
+      post_ticket
+    end
+
     def post_ticket
-      Sender.new.post_to_redmine( default_ticket_options )
+      RestClient.post("#{protocol}://#{host}:#{port}/ticket_server/new_issue", default_request_params
     end
 
     def issue_status
