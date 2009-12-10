@@ -14,6 +14,8 @@ INSTALLATION
 
 Install the rubygem from http://gemcutter.org
 
+Requires redmine_ticket_server 0.1
+
 EXAMPLES
 -------------
 see examples/ dir
