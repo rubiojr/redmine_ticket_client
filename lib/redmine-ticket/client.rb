@@ -62,7 +62,7 @@ module RedmineTicketClient
     end
 
     def post_ticket
-      RestClient.post("#{protocol}://#{host}:#{port}/ticket_server/new_issue", default_request_params
+      RestClient.post("#{protocol}://#{host}:#{port}/ticket_server/new_issue", default_request_params)
     end
 
     def issue_status
@@ -79,54 +79,4 @@ module RedmineTicketClient
     end
   end
 
-  class Sender
-    def rescue_action_in_public(exception)
-    end
-
-    def post_to_redmine hash_or_exception
-      ticket = hash_or_exception
-      send_to_redmine(:ticket => ticket)
-    end
-    
-    def send_to_redmine data #:nodoc:
-      headers = {
-        'Content-type' => 'application/x-yaml',
-        'Accept' => 'text/xml, application/xml'
-      }
-
-      url = RedmineTicketClient.url
-      
-      http = Net::HTTP::Proxy(RedmineTicketClient.proxy_host, 
-                              RedmineTicketClient.proxy_port, 
-                              RedmineTicketClient.proxy_user, 
-                              RedmineTicketClient.proxy_pass).new(url.host, url.port)
-
-      http.use_ssl = true
-        http.read_timeout = RedmineTicketClient.http_read_timeout
-        http.open_timeout = RedmineTicketClient.http_open_timeout
-      http.use_ssl = !!RedmineTicketClient.secure 
-
-        response = begin
-          http.post(url.path, stringify_keys(data).to_yaml, headers)
-        rescue TimeoutError => e
-          $stderr.puts  "Timeout while contacting the Redmine server."
-          nil
-        end
-       
-      case response
-      when Net::HTTPSuccess then
-        return response.body
-      else
-        $stderr.puts "Redmine Failure: #{response.class}\n#{response.body if response.respond_to? :body}"
-        return response.class
-      end
-    end
-    
-    def stringify_keys(hash) #:nodoc:
-      hash.inject({}) do |h, pair|
-        h[pair.first.to_s] = pair.last.is_a?(Hash) ? stringify_keys(pair.last) : pair.last
-        h
-      end
-    end
-  end
 end

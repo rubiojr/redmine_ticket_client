@@ -20,9 +20,9 @@ params = {
                   :custom_fields => {
                     :field1 => 'bar',
                     :field2 => 'foo'
-                  }
+                  }.to_yaml
 
-                 }.to_yaml
+                 }
 
 RedmineTicketClient.configure do |config|
     config.params = params
