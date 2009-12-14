@@ -1,8 +1,0 @@
-History.txt
-Manifest.txt
-README.txt
-Rakefile
-examples/issue_status.rb
-examples/last_tickets.rb
-examples/post_ticket.rb
-lib/redmine-ticket/client.rb
